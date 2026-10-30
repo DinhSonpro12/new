@@ -64,6 +64,15 @@ export const CameraView: React.FC<CameraViewProps> = ({
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+
+    // Dynamically match canvas internal resolution to rendered dimensions
+    if (canvas.clientWidth && canvas.clientHeight) {
+      if (canvas.width !== canvas.clientWidth || canvas.height !== canvas.clientHeight) {
+        canvas.width = canvas.clientWidth;
+        canvas.height = canvas.clientHeight;
+      }
+    }
+
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 

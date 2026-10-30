@@ -11,6 +11,7 @@ import { HudHeader } from './components/HudHeader';
 import { PauseModal } from './components/PauseModal';
 import { GameOverModal } from './components/GameOverModal';
 import { QuestionEditorModal } from './components/QuestionEditorModal';
+import { ResizableCameraDock } from './components/ResizableCameraDock';
 import { DEFAULT_QUIZ_PACKS, Question, QuizPack } from './questions';
 import { HeadPoseData, HeadTracker } from './headTracker';
 import { sound } from './soundEffects';
@@ -416,29 +417,33 @@ export default function App() {
             )}
           </main>
 
-          {/* Bottom Perimeter: Compact Webcam PiP Overlay + Flat Control Hint Line */}
-          <div className="w-full px-3 sm:px-5 py-1.5 sm:py-2 bg-slate-950/90 backdrop-blur-md border-t border-slate-800/80 flex items-center justify-between gap-3 z-20 flex-shrink-0">
-            {/* Control hints */}
-            <div className="text-[11px] sm:text-xs text-slate-400 font-medium">
-              <span className="hidden md:inline">
-                Nghiêng đầu sang Trái hoặc Phải · <strong className="text-sky-300">Giữ yên {holdDuration}s</strong> để chốt đáp án ·{' '}
-              </span>
-              <span>
-                Phím <kbd className="px-1 py-0.5 rounded bg-slate-800 border border-slate-700 text-amber-300 font-mono text-[10px]">◄</kbd>{' '}
-                <kbd className="px-1 py-0.5 rounded bg-slate-800 border border-slate-700 text-amber-300 font-mono text-[10px]">►</kbd> hoặc nhấn chuột
-              </span>
+          {/* Bottom Perimeter: Resizable Webcam Dock + Instructions */}
+          <div className="w-full px-3 sm:px-5 py-2 bg-slate-950/95 backdrop-blur-md border-t border-slate-800/90 flex items-end justify-between gap-3 z-20 flex-shrink-0">
+            {/* Control hints & Status */}
+            <div className="flex-1 py-1 text-[11px] sm:text-xs text-slate-400 font-medium flex flex-col justify-end gap-1.5 min-w-0">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="px-2 py-0.5 rounded-full bg-slate-900 border border-slate-800 text-slate-300 font-semibold text-[10px] sm:text-[11px]">
+                  Điều khiển bằng nghiêng đầu
+                </span>
+                <span className="text-sky-300 font-semibold">
+                  Giữ yên {holdDuration}s để tự động chốt đáp án
+                </span>
+              </div>
+              <div className="text-slate-400 text-[10px] sm:text-[11px] leading-relaxed truncate sm:text-clip">
+                <span>Nghiêng Trái ◄ hoặc Phải ► · Dự phòng: Phím </span>
+                <kbd className="px-1 py-0.5 rounded bg-slate-800 border border-slate-700 text-amber-300 font-mono text-[10px]">◄</kbd>{' '}
+                <kbd className="px-1 py-0.5 rounded bg-slate-800 border border-slate-700 text-amber-300 font-mono text-[10px]">►</kbd>
+                <span> hoặc nhấn chuột trực tiếp</span>
+              </div>
             </div>
 
-            {/* Compact Picture-in-Picture Webcam */}
-            <div className="w-24 sm:w-32 aspect-[4/3] rounded-xl overflow-hidden border border-slate-700/80 shadow-lg flex-shrink-0">
-              <CameraView
-                tracker={trackerRef.current}
-                poseData={poseData}
-                selectedDirection={selectedDirection}
-                miniMode={true}
-                className="w-full h-full"
-              />
-            </div>
+            {/* Resizable Camera Dock (Default 250px x 250px, corner drag resize & presets) */}
+            <ResizableCameraDock
+              tracker={trackerRef.current}
+              poseData={poseData}
+              selectedDirection={selectedDirection}
+              isLockedIn={isLockedIn}
+            />
           </div>
         </div>
       )}
