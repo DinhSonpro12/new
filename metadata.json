@@ -1,0 +1,6 @@
+{
+  "name": "Nghiêng Đầu Chọn Đúng - Head Tilt Quiz",
+  "description": "Game đố vui tương tác đỉnh cao điều khiển bằng cách nghiêng đầu sang trái hoặc phải trước webcam cùng hiệu ứng âm thanh sống động và nhiều chủ đề hấp dẫn.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
